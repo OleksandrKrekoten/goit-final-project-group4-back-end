@@ -1,11 +1,7 @@
 const { Transactions } = require("../../schema/transactionsMongooseSchema");
-const { mothsResultsSchema } = require("../../schema/joiSchemas");
+ // const { mothsResultsSchema } = require("../../schema/joiSchemas");
 
 const expensesMonths = async (req, res) => {
-  const { error } = mothsResultsSchema.validate(req.body);
-  if (error) {
-    res.status(400).json({ message: error.message });
-  }
   const { currentMonth, year } = req.body;
   // const{_id:userId}=req.user
   const userId = "63f09d03f2f85fb05e29c4as";
