@@ -3,7 +3,7 @@ const { mothsResultsSchema } = require("../../schema/joiSchemas");
 const fullStatistics = async (req, res) => {
   const { error } = mothsResultsSchema.validate(req.body);
   if (error) {
-    res.status(404).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
   // const { month,year } = req.body;
   // const{_id:userId}=req.user

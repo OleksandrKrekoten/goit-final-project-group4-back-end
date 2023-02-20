@@ -4,13 +4,13 @@ const { mothsResultsSchema } = require("../../schema/joiSchemas");
 const expensesMonths = async (req, res) => {
   const { error } = mothsResultsSchema.validate(req.body);
   if (error) {
-    res.status(404).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
-  // const { month,year } = req.body;
+  const { currentMonth, year } = req.body;
   // const{_id:userId}=req.user
   const userId = "63f09d03f2f85fb05e29c4as";
-  const year = 2023;
-  const currentMonth = 10;
+  // const year = 2023;
+  // const currentMonth = 10;
 
   const yearStarts = new Date(`Wed, 01 Jan ${year} 00:00:00 GMT`);
   const yearEnds = new Date(`Thu, 31 Dec ${year} 00:00:00 GMT`);
@@ -52,6 +52,11 @@ const expensesMonths = async (req, res) => {
       },
     },
   ]);
+  if (array.length === 0) {
+    return res
+      .status(400)
+      .json({ message: "There aren`t expenses in this year" });
+  }
   const result = array.filter(({ month }) => month >= currentMonth);
   const length = result.length;
 
