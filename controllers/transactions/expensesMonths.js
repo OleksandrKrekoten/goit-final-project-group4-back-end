@@ -6,9 +6,9 @@ const expensesMonths = async (req, res) => {
   if (error) {
     res.status(400).json({ message: error.message });
   }
-   const { currentMonth,year } = req.body;
+  const { currentMonth, year } = req.body;
   // const{_id:userId}=req.user
-   const userId = "63f09d03f2f85fb05e29c4as";
+  const userId = "63f09d03f2f85fb05e29c4as";
   // const year = 2023;
   // const currentMonth = 10;
 
@@ -52,9 +52,10 @@ const expensesMonths = async (req, res) => {
       },
     },
   ]);
-  if(array.length===0)
-  {
-    return res.status(400).json({message:"There aren`t expenses in this year"});
+  if (array.length === 0) {
+    return res
+      .status(400)
+      .json({ message: "There aren`t expenses in this year" });
   }
   const result = array.filter(({ month }) => month >= currentMonth);
   const length = result.length;
