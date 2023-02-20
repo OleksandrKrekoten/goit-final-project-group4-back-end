@@ -1,4 +1,4 @@
-const { Transactions } = require("../models/transactions");
+const { Transactions } = require("../schema/transactionsMongooseSchema");
 const createError = require("http-errors");
 
 const getTransactionById = async (transactionId) => {

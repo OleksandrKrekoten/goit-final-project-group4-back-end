@@ -4,7 +4,6 @@ const {
   addTransactionController,
   deleteTransactionController,
 } = require("../../controllers/transactions.controller");
-const { tryCatchWrapper } = require("../../helpers/apiHelpers");
 const {
   expensesMonths,
   incomeMonths,
@@ -19,17 +18,17 @@ const {
 router.post(
   "/expenses",
   addTransactionValitation,
-  tryCatchWrapper(addTransactionController)
+  ctrlWrapper(addTransactionController)
 );
 router.post(
   "/income",
   addTransactionValitation,
-  tryCatchWrapper(addTransactionController)
+  ctrlWrapper(addTransactionController)
 );
 router.delete(
   "/:transactionId",
   addIdValitation,
-  tryCatchWrapper(deleteTransactionController)
+  ctrlWrapper(deleteTransactionController)
 );
 
 router.get("/incomeMonths", ctrlWrapper(incomeMonths));
