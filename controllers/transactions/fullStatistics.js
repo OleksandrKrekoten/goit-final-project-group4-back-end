@@ -5,15 +5,15 @@ const fullStatistics = async (req, res) => {
   if (error) {
     res.status(404).json({ message: error.message });
   }
-   const { currentMonth,year } = req.body;
+  // const { month,year } = req.body;
   // const{_id:userId}=req.user
   let incomeTotal;
   let expenseTotal;
   let incomesData;
   let expensesData;
   const userId = "1";
-  // const year = 2020;
-  // ґconst currentMonth = 3;
+  const year = 2020;
+  const currentMonth = 3;
   function getMonthName(monthNumber) {
     const date = new Date();
     date.setMonth(monthNumber - 1);
