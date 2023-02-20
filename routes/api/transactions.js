@@ -1,25 +1,32 @@
-const express = require('express')
+const express = require("express");
+const router = express.Router();
+const {
+  addTransactionController,
+  deleteTransactionController,
+} = require("../../controllers/transactions.controller");
+const { tryCatchWrapper } = require("../../helpers/apiHelpers");
+// const { authMiddleware } = require("../../middlewares/authMiddleware");
+const {
+  addTransactionValitation,
+  addIdValitation,
+} = require("../../middlewares/transactionsValidation");
 
-const router = express.Router()
+// router.use(tryCatchWrapper(authMiddleware));
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.post(
+  "/expenses",
+  addTransactionValitation,
+  tryCatchWrapper(addTransactionController)
+);
+router.post(
+  "/income",
+  addTransactionValitation,
+  tryCatchWrapper(addTransactionController)
+);
+router.delete(
+  "/:transactionId",
+  addIdValitation,
+  tryCatchWrapper(deleteTransactionController)
+);
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-router.put('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-module.exports = router
+module.exports = router;
