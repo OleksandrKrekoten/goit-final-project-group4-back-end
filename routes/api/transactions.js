@@ -13,7 +13,7 @@ const ctrlWrapper = require("../../middlewares/ctrlWrapper");
 const {
   addTransactionValitation,
   addIdValitation,
-  mothsResultsValidation
+  mothsResultsValidation,
 } = require("../../middlewares/transactionsValidation");
 
 router.post(
@@ -32,10 +32,18 @@ router.delete(
   ctrlWrapper(deleteTransactionController)
 );
 
-router.get("/incomeMonths", mothsResultsValidation,ctrlWrapper(incomeMonths));
+router.get("/incomeMonths", mothsResultsValidation, ctrlWrapper(incomeMonths));
 
-router.get("/expensesMonths", mothsResultsValidation,ctrlWrapper(expensesMonths));
+router.get(
+  "/expensesMonths",
+  mothsResultsValidation,
+  ctrlWrapper(expensesMonths)
+);
 
-router.get("/fullStatistics", mothsResultsValidation,ctrlWrapper(fullStatistics));
+router.get(
+  "/fullStatistics",
+  mothsResultsValidation,
+  ctrlWrapper(fullStatistics)
+);
 
 module.exports = router;

@@ -8,7 +8,6 @@ const tryCatchWrapper = (controller) => {
   };
 };
 
-
 module.exports = {
   tryCatchWrapper,
 };
