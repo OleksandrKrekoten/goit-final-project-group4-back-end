@@ -3,7 +3,7 @@ const schema = mongoose.Schema(
   {
     email: {
       type: String,
-      required: [true, "Email address is required"],
+      required: true,
       trim: true,
       lowercase: true,
       unique: true,
@@ -15,13 +15,22 @@ const schema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Email address is required"],
+      required: true,
       minLength: 8,
     },
     balance: {
       type: String,
-    //   required: [true, "Balance is required"],
+      //   required: [true, "Balance is required"],
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
+    token: String,
   },
   { versionKey: false, timestamps: true }
 );

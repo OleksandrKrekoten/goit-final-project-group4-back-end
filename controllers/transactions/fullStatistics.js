@@ -1,6 +1,5 @@
 const { Transactions } = require("../../schema/transactionsMongooseSchema");
 const fullStatistics = async (req, res) => {
-  
   // const { month,year } = req.body;
   // const{_id:userId}=req.user
   let incomeTotal;

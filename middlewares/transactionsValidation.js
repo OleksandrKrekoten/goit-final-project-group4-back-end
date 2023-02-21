@@ -24,7 +24,7 @@ const addIdValitation = (req, res, next) => {
     return res.status(400).json({ message: validationResult.error.message });
   next();
 };
-const mothsResultsValidation=(req,res,next)=>{
+const mothsResultsValidation = (req, res, next) => {
   const mothsResultsSchema = Joi.object({
     year: Joi.number().required(),
     currentMonth: Joi.number().min(1).max(12).required(),
@@ -34,9 +34,9 @@ const mothsResultsValidation=(req,res,next)=>{
     res.status(400).json({ message: error.message });
   }
   next();
-}
+};
 module.exports = {
   addTransactionValitation,
   addIdValitation,
-  mothsResultsValidation
+  mothsResultsValidation,
 };
