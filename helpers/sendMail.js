@@ -1,20 +1,23 @@
 const nodemailer = require("nodemailer");
+
+const config = {
+  host: "smtp.ukr.net",
+  port: 465,
+  secure: true,
+  auth: {
+    user: "kapustat@ukr.net",
+    pass: process.env.IMAP_KEY,
+  },
+};
+
 const sendMail = async ({ to, subject, text }) => {
   const email = {
-    from: "kapustat@meta.ua",
+    from: "kapustat@ukr.net",
     to,
     subject,
     text,
   };
-  const config = {
-    host: "smtp.meta.ua",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "kapustat@meta.ua",
-      pass: process.env.META_PASS,
-    },
-  };
+
   const transporter = nodemailer.createTransport(config);
 
   await transporter.sendMail(email);

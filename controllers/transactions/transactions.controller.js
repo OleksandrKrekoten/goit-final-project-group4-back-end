@@ -1,12 +1,12 @@
 const {
   addTransaction,
   deleteTransaction,
-} = require("../services/transactionsService");
+} = require("../../services/transactionsService");
 
 const addTransactionController = async (req, res) => {
-  // const { _id: userId } = req.user;
+  const { _id: owner } = req.user;
   const { userId, _id, dateTransaction, income, sum, category, description } =
-    await addTransaction(req.body);
+    await addTransaction(req.body, owner);
 
   return res.status(201).json({
     userId: userId.toString(),
@@ -21,8 +21,12 @@ const addTransactionController = async (req, res) => {
 
 const deleteTransactionController = async (req, res, next) => {
   const { transactionId } = req.params;
-  // const { _id: userId } = req.user;
-  const isTransactionDeleted = await deleteTransaction(transactionId, next);
+  const { _id: owner } = req.user;
+  const isTransactionDeleted = await deleteTransaction(
+    transactionId,
+    owner,
+    next
+  );
   if (!isTransactionDeleted) return;
   res.status(200).json({
     message: "The transaction is successfully deleted!",

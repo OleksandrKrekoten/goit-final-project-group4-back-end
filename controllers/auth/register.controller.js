@@ -23,7 +23,7 @@ const register = async (req, res, next) => {
     });
     await sendMail({
       to: email,
-      subject: "Pleace confirm your email",
+      subject: "Please confirm your email",
       text: `Confirm your email: http://localhost:${process.env.PORT}/api/auth/verify/${verificationToken}`,
     });
     res.status(201).json({
