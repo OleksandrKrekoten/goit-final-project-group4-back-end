@@ -1,14 +1,15 @@
 const { Transactions } = require("../../schema/transactionsMongooseSchema");
 const fullStatistics = async (req, res) => {
-  // const { month,year } = req.body;
-  // const{_id:userId}=req.user
+  console.log(req.body);
+  const { currentMonth, year } = req.body;
+  const userId = req.user._id;
   let incomeTotal;
   let expenseTotal;
   let incomesData;
   let expensesData;
-  const userId = "1";
-  const year = 2020;
-  const currentMonth = 3;
+  // const userId = "2";
+  // const year = 2020;
+  // const currentMonth = 3;
   function getMonthName(monthNumber) {
     const date = new Date();
     date.setMonth(monthNumber - 1);
@@ -73,9 +74,10 @@ const fullStatistics = async (req, res) => {
     },
   ]);
   if (startedRes.length === 0) {
-    res
-      .status(400)
-      .json({ message: "There isn`t any income and expenses in this month" });
+    // return res
+    //   .status(400)
+    //   .json({ message: "There isn`t any income and expenses in this month" });
+    return res.status(200).json({ income: {}, expenses: {} });
   }
   let definer = "both";
   if (startedRes.length === 1) {
@@ -181,8 +183,8 @@ const fullStatistics = async (req, res) => {
     expenseTotal = expenses.totalSum;
     expensesData = expenseCategories;
   }
-  res.status(200).json({
-    icome: {
+  return res.status(200).json({
+    income: {
       totalSum: incomeTotal,
       categories: incomesData,
     },

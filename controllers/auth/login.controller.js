@@ -2,6 +2,7 @@ const { User } = require("../../schema/usersMongooseSchema");
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;

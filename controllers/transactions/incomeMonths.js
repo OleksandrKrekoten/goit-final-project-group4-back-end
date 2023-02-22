@@ -1,11 +1,12 @@
 const { Transactions } = require("../../schema/transactionsMongooseSchema");
 
 const incomeMonths = async (req, res) => {
-  // const { month,year } = req.body;
-  // const{_id:userId}=req.user
-  const userId = "1";
-  const year = 2020;
-  const currentMonth = 5;
+  const { currentMonth, year } = req.body;
+  const userId = req.user._id;
+  console.log(userId);
+  // const userId = "1";
+  // const year = 2020;
+  // const currentMonth = 5;
 
   const yearStarts = new Date(`Wed, 01 Jan ${year} 00:00:00 GMT`);
   const yearEnds = new Date(`Thu, 31 Dec ${year} 00:00:00 GMT`);
@@ -62,6 +63,6 @@ const incomeMonths = async (req, res) => {
     }
   }
   result.sort((a, b) => a.month - b.month);
-  res.status(200).json(result);
+  return res.status(200).json(result);
 };
 module.exports = incomeMonths;
