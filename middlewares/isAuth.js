@@ -18,6 +18,7 @@ async function isAuth(req, res, next) {
     const user = await User.findById(id);
     req.token = token;
     req.user = user;
+    console.log(req.user)
   } catch (error) {
     if (
       error.name === "TokenExpiredError" ||

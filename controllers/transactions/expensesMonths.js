@@ -3,8 +3,8 @@ const { Transactions } = require("../../schema/transactionsMongooseSchema");
 
 const expensesMonths = async (req, res) => {
   const { currentMonth, year } = req.body;
-  // const{_id:userId}=req.user
-  const userId = "63f09d03f2f85fb05e29c4as";
+  const userId = req.user._id;
+  // const userId = "63f09d03f2f85fb05e29c4as";
   // const year = 2023;
   // const currentMonth = 10;
 
@@ -68,6 +68,6 @@ const expensesMonths = async (req, res) => {
     }
   }
   result.sort((a, b) => a.month - b.month);
-  res.status(200).json(result);
+  return res.status(200).json(result);
 };
 module.exports = expensesMonths;
