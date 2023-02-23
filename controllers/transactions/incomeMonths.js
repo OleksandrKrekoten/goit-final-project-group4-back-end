@@ -1,12 +1,11 @@
 const { Transactions } = require("../../schema/transactionsMongooseSchema");
+const createError = require("http-errors");
 
-const incomeMonths = async (req, res) => {
+const incomeMonths = async (req, res, next) => {
+  if (!req.user) return next(createError(404, "No users found"));
+  if (!req.user.token) return next(createError(401, "Not authorized"));
   const { currentMonth, year } = req.body;
-  const userId = req.user._id;
-  console.log(userId);
-  // const userId = "1";
-  // const year = 2020;
-  // const currentMonth = 5;
+  const userId = req.user._id.toString();
 
   const yearStarts = new Date(`Wed, 01 Jan ${year} 00:00:00 GMT`);
   const yearEnds = new Date(`Thu, 31 Dec ${year} 00:00:00 GMT`);
@@ -48,6 +47,11 @@ const incomeMonths = async (req, res) => {
       },
     },
   ]);
+  if (array.length === 0) {
+    return res
+      .status(400)
+      .json({ message: "There aren`t expenses in this year" });
+  }
   const result = array.filter(({ month }) => month >= currentMonth);
   const length = result.length;
 

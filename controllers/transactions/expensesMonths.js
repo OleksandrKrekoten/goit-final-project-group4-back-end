@@ -1,12 +1,11 @@
 const { Transactions } = require("../../schema/transactionsMongooseSchema");
-// const { mothsResultsSchema } = require("../../schema/joiSchemas");
+const createError = require("http-errors");
 
-const expensesMonths = async (req, res) => {
+const expensesMonths = async (req, res, next) => {
+  if (!req.user) return next(createError(404, "No users found"));
+  if (!req.user.token) return next(createError(401, "Not authorized"));
   const { currentMonth, year } = req.body;
-  const userId = req.user._id;
-  // const userId = "63f09d03f2f85fb05e29c4as";
-  // const year = 2023;
-  // const currentMonth = 10;
+  const userId = req.user._id.toString();
 
   const yearStarts = new Date(`Wed, 01 Jan ${year} 00:00:00 GMT`);
   const yearEnds = new Date(`Thu, 31 Dec ${year} 00:00:00 GMT`);

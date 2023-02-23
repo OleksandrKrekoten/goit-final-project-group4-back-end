@@ -1,15 +1,14 @@
 const { Transactions } = require("../../schema/transactionsMongooseSchema");
-const fullStatistics = async (req, res) => {
-  console.log(req.body);
+const createError = require("http-errors");
+const fullStatistics = async (req, res, next) => {
+  if (!req.user) return next(createError(404, "No users found"));
+  if (!req.user.token) return next(createError(401, "Not authorized"));
   const { currentMonth, year } = req.body;
-  const userId = req.user._id;
+  const userId = req.user._id.toString();
   let incomeTotal;
   let expenseTotal;
   let incomesData;
   let expensesData;
-  // const userId = "2";
-  // const year = 2020;
-  // const currentMonth = 3;
   function getMonthName(monthNumber) {
     const date = new Date();
     date.setMonth(monthNumber - 1);
@@ -83,6 +82,7 @@ const fullStatistics = async (req, res) => {
   if (startedRes.length === 1) {
     const { type } = startedRes[0];
     definer = type;
+
   }
   if (definer === "both" || definer === "income") {
     const income = startedRes[0];
@@ -134,7 +134,7 @@ const fullStatistics = async (req, res) => {
   }
   //
   if (definer === "both" || definer === "expenses") {
-    const expenses = startedRes[1];
+    const expenses = startedRes[0];
     const expensesTransactions = expenses.transactions;
 
     const arr2 = [];
