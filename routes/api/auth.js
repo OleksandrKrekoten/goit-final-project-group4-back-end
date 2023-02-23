@@ -1,6 +1,6 @@
 const express = require("express");
 const login = require("../../controllers/auth/login.controller");
-const logout = require("../../controllers/auth/logOut.controller");
+const logout = require("../../controllers/auth/logout.controller");
 const register = require("../../controllers/auth/register.controller");
 const { updateUserBalance } = require("../../controllers/auth/user.controller");
 const verifyEmail = require("../../controllers/auth/verifyEmail");

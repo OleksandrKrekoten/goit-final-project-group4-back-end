@@ -23,7 +23,7 @@ const login = async (req, res, next) => {
   });
   await User.findByIdAndUpdate(storedUser._id, { token });
 
-  return res.json({
+  return res.status(201).json({
     token,
   });
 };
