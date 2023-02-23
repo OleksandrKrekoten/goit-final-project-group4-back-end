@@ -1,21 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const isAuth=require("../../middlewares/isAuth")
+const isAuth = require("../../middlewares/isAuth");
 const {
   addTransactionController,
   deleteTransactionController,
-} = require("../../controllers/transactions.controller");
+} = require("../../controllers/transactions/transactions.controller");
 const {
   expensesMonths,
   incomeMonths,
   fullStatistics,
 } = require("../../controllers/transactions/index");
-const ctrlWrapper = require("../../middlewares/ctrlWrapper");
+const ctrlWrapper = require("../../helpers/ctrlWrapper");
 const {
   addTransactionValitation,
   addIdValitation,
   mothsResultsValidation,
 } = require("../../middlewares/transactionsValidation");
+
+router.use(ctrlWrapper(isAuth));
 
 router.post(
   "/expenses",
@@ -33,7 +35,12 @@ router.delete(
   ctrlWrapper(deleteTransactionController)
 );
 
-router.post("/incomeMonths", isAuth,mothsResultsValidation, ctrlWrapper(incomeMonths));
+router.post(
+  "/incomeMonths",
+  isAuth,
+  mothsResultsValidation,
+  ctrlWrapper(incomeMonths)
+);
 
 router.post(
   "/expensesMonths",

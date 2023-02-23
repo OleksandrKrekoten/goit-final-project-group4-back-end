@@ -12,4 +12,16 @@ const authValidation = (req, res, next) => {
   }
   next();
 };
-module.exports = authValidation;
+
+const userBalanceValidation = (req, res, next) => {
+  const schema = Joi.object({
+    balance: Joi.number().required(),
+  });
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    return next(createError(400, validation.error.message));
+  }
+  next();
+};
+
+module.exports = { authValidation, userBalanceValidation };

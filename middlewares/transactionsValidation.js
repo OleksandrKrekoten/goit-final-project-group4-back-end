@@ -2,7 +2,6 @@ const Joi = require("joi");
 
 const addTransactionValitation = (req, res, next) => {
   const schema = Joi.object({
-    userId: Joi.string().min(24).max(24).required(),
     dateTransaction: Joi.date().required(),
     income: req.originalUrl.includes("income")
       ? Joi.boolean().valid(true).required()
@@ -28,12 +27,12 @@ const mothsResultsValidation = (req, res, next) => {
   const mothsResultsSchema = Joi.object({
     year: Joi.number().required(),
     currentMonth: Joi.number().min(1).max(12).required(),
-    userId:Joi.string().required()
+    userId: Joi.string().required(),
   });
   const { error } = mothsResultsSchema.validate(req.body);
   if (error) {
-    console.log("Validation")
-    console.log(req.body)
+    console.log("Validation");
+    console.log(req.body);
     return res.status(400).json({ message: error.message });
   }
   next();
