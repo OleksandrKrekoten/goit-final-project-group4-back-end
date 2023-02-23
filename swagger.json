@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3030/api" }],
+  "servers": [{ "url": "http://localhost:3030/api" },{"url":"https://kapusta-dvde.onrender.com/api"}],
   "tags": [
     {
       "name": "Auth",
