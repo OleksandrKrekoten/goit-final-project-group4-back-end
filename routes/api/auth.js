@@ -18,7 +18,7 @@ authRouter.post("/login", ctrlWrapper(authValidation), login);
 authRouter.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
 authRouter.post("/logout", ctrlWrapper(isAuth), logout);
 authRouter.patch(
-  "/user",
+  "/user/balance",
   ctrlWrapper(isAuth),
   ctrlWrapper(userBalanceValidation),
   updateUserBalance
