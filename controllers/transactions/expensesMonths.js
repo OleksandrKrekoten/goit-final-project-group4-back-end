@@ -2,11 +2,11 @@ const { Transactions } = require("../../schema/transactionsMongooseSchema");
 // const { mothsResultsSchema } = require("../../schema/joiSchemas");
 
 const expensesMonths = async (req, res) => {
-  // const { currentMonth, year } = req.body;
-  // const{_id:userId}=req.user
-  const userId = "63f09d03f2f85fb05e29c4as";
-  const year = 2023;
-  const currentMonth = 02;
+  const { currentMonth, year } = req.body;
+  const userId = req.user._id;
+  // const userId = "63f09d03f2f85fb05e29c4as";
+  // const year = 2023;
+  // const currentMonth = 10;
 
   const yearStarts = new Date(`Wed, 01 Jan ${year} 00:00:00 GMT`);
   const yearEnds = new Date(`Thu, 31 Dec ${year} 00:00:00 GMT`);
@@ -68,6 +68,6 @@ const expensesMonths = async (req, res) => {
     }
   }
   result.sort((a, b) => a.month - b.month);
-  res.status(200).json(result);
+  return res.status(200).json(result);
 };
 module.exports = expensesMonths;

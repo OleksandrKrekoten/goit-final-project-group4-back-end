@@ -27,9 +27,12 @@ const mothsResultsValidation = (req, res, next) => {
   const mothsResultsSchema = Joi.object({
     year: Joi.number().required(),
     currentMonth: Joi.number().min(1).max(12).required(),
+    userId: Joi.string().required(),
   });
   const { error } = mothsResultsSchema.validate(req.body);
   if (error) {
+    console.log("Validation");
+    console.log(req.body);
     return res.status(400).json({ message: error.message });
   }
   next();

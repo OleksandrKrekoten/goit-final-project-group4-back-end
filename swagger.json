@@ -1,0 +1,517 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.2",
+    "title": "Kapu$ta docs",
+    "description": "Showing off swagger-ui-express",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3030/api" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Transactions",
+      "description": "Transactions endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "email": "user@gmail.com",
+                  "password": "12345678"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "email": "user@gmail.com"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "email": "user@gmail.com",
+                  "password": "12345678"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM"
+                    
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "description": "message",
+                  "example": "No content"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/transaction/expenses": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Add expenses transaction",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Request object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+               "example":{
+                 "userId": "111111111111111111111111",
+                 "dateTransaction": "2020-03-22T21:21:41.052+00:00",
+                 "income": false,
+                 "sum": "120",
+                 "category": "description",
+                 "description": "shirt"
+               }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "userId": "111111111111111111111111",
+                    "_id":"22222222222222",
+                    "dateTransaction": "2020-03-22T21:21:41.052+00:00",
+                    "income": false,
+                    "sum": "120",
+                    "category": "description",
+                    "description": "shirt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/transaction/income": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Add income transaction",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Request object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "userId": "111111111111111111111111",
+                  "dateTransaction": "2020-03-22T21:21:41.052+00:00",
+                  "income": true,
+                  "sum": "120",
+                  "category": "description",
+                  "description": "shirt"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "userId": "111111111111111111111111",
+                    "_id":"22222222222222",
+                    "dateTransaction": "2020-03-22T21:21:41.052+00:00",
+                    "income": true,
+                    "sum": "120",
+                    "category": "description",
+                    "description": "shirt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/transaction/:transactionId": {
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "delete transaction",
+        "parameters": [{ "in": "path", "name": "transactionId" }],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "description": "message",
+                  "example": "The transaction is successfully deleted!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/transaction/incomeMonths": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Request object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example":{
+                  "year": "2023",
+                  "currentMonth": "2",
+                  "userId": "63f09d03f2f85fb05e29c4as"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "total": 2000,
+                      "month": 1
+                    },
+                    {
+                      "total": 10000,
+                      "month": 2
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/transaction/expensesMonths": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Request object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "year": "2023",
+                  "currentMonth": "2",
+                  "userId": "63f09d03f2f85fb05e29c4as"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example":[
+                    {
+                      "total": 2000,
+                      "month": 1
+                    },
+                    {
+                      "total": 10000,
+                      "month": 2
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/transaction/fullStatistics": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Request object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "year": "2023",
+                  "currentMonth": "10"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "parameters": [],
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "icome": {
+                      "totalSum": 1800,
+                      "categories": [
+                        {
+                          "category": "Clothes",
+                          "sum": 1300,
+                          "descriptions": [
+                            {
+                              "description": "bed",
+                              "sum": 500
+                            },
+                            {
+                              "description": "bed2",
+                              "sum": 500
+                            },
+                            {
+                              "description": "shirt",
+                              "sum": 300
+                            }
+                          ]
+                        },
+                        {
+                          "category": "Food",
+                          "sum": 500,
+                          "descriptions": [
+                            {
+                              "description": "jjhhhgg",
+                              "sum": 500
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "expenses": {
+                      "totalSum": 4500,
+                      "categories": [
+                        {
+                          "category": "HomeSpace",
+                          "sum": 800,
+                          "descriptions": [
+                            {
+                              "description": "jjhhhgg",
+                              "sum": 800
+                            }
+                          ]
+                        },
+                        {
+                          "category": "Furniture",
+                          "sum": 300,
+                          "descriptions": [
+                            {
+                              "description": "sofa",
+                              "sum": 300
+                            }
+                          ]
+                        },
+                        {
+                          "category": "Home",
+                          "sum": 1800,
+                          "descriptions": [
+                            {
+                              "description": "new",
+                              "sum": 500
+                            },
+                            {
+                              "description": "tyre",
+                              "sum": 1300
+                            }
+                          ]
+                        },
+                        {
+                          "category": "Clothes",
+                          "sum": 1600,
+                          "descriptions": [
+                            {
+                              "description": "Homdh",
+                              "sum": 650
+                            },
+                            {
+                              "description": "wow",
+                              "sum": 950
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    }
+  }
+}

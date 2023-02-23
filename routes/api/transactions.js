@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const isAuth=require("../../middlewares/isAuth")
 const {
   addTransactionController,
   deleteTransactionController,
@@ -35,16 +36,18 @@ router.delete(
   ctrlWrapper(deleteTransactionController)
 );
 
-router.get("/incomeMonths", mothsResultsValidation, ctrlWrapper(incomeMonths));
+router.post("/incomeMonths", isAuth,mothsResultsValidation, ctrlWrapper(incomeMonths));
 
-router.get(
+router.post(
   "/expensesMonths",
+  isAuth,
   mothsResultsValidation,
   ctrlWrapper(expensesMonths)
 );
 
-router.get(
+router.post(
   "/fullStatistics",
+  isAuth,
   mothsResultsValidation,
   ctrlWrapper(fullStatistics)
 );
