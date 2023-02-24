@@ -1,5 +1,5 @@
 const createError = require("http-errors");
-const { updateBalance } = require("../../services/userService");
+const { updateBalance, getBalance } = require("../../services/userService");
 
 const updateUserBalance = async (req, res, next) => {
   if (!req.user) return next(createError(404, "No users found"));
@@ -13,4 +13,13 @@ const updateUserBalance = async (req, res, next) => {
   return res.status(201).json({ newUserBalance });
 };
 
-module.exports = { updateUserBalance };
+const getUserBalance = async (req, res, next) => {
+  if (!req.user) return next(createError(404, "No users found"));
+  if (!req.user.token) return next(createError(401, "Not authorized"));
+
+  const balance = await getBalance(req.user);
+
+  return res.status(201).json({ balance });
+};
+
+module.exports = { updateUserBalance, getUserBalance };
