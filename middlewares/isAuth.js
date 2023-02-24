@@ -16,6 +16,9 @@ async function isAuth(req, res, next) {
     }
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(id);
+    if (!user || !user.token) {
+      throw createError(409, "user not authorized");
+    }
     req.token = token;
     req.user = user;
   } catch (error) {
