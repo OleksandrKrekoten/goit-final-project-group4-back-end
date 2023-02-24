@@ -16,14 +16,14 @@ const isAuth = require("../../middlewares/isAuth");
 
 const authRouter = express.Router();
 
-authRouter.post("/register", ctrlWrapper(authValidation), register);
-authRouter.post("/login", ctrlWrapper(authValidation), ctrlWrapper(login));
+authRouter.post("/register", authValidation, register);
+authRouter.post("/login", authValidation, ctrlWrapper(login));
 authRouter.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
 authRouter.post("/logout", ctrlWrapper(isAuth), ctrlWrapper(logout));
 authRouter.patch(
   "/user/balance",
   ctrlWrapper(isAuth),
-  ctrlWrapper(userBalanceValidation),
+  userBalanceValidation,
   ctrlWrapper(updateUserBalance)
 );
 authRouter.get(
