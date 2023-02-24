@@ -37,21 +37,18 @@ router.delete(
 
 router.post(
   "/incomeMonths",
-  isAuth,
   mothsResultsValidation,
   ctrlWrapper(incomeMonths)
 );
 
 router.post(
   "/expensesMonths",
-  isAuth,
   mothsResultsValidation,
   ctrlWrapper(expensesMonths)
 );
 
 router.post(
   "/fullStatistics",
-  isAuth,
   mothsResultsValidation,
   ctrlWrapper(fullStatistics)
 );
