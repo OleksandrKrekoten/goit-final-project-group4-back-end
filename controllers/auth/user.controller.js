@@ -1,7 +1,7 @@
 const createError = require("http-errors");
 const { updateBalance } = require("../../services/userService");
 
-const updateUserBalance = async (req, res) => {
+const updateUserBalance = async (req, res, next) => {
   if (!req.user) return next(createError(404, "No users found"));
   if (!req.user.token) return next(createError(401, "Not authorized"));
 

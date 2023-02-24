@@ -93,7 +93,6 @@
                 "schema": {
                   "example": {
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM"
-                    
                   }
                 }
               }
@@ -140,6 +139,49 @@
         }
       }
     },
+    "/auth/user/balance": {
+      "patch": {
+        "tags": ["Auth"],
+        "security": [{ "Bearer": [] }],
+        "summary": "updating the user's balance",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "balance": "777"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "newUserBalance": "777"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
     "/transaction/expenses": {
       "post": {
         "tags": ["Transactions"],
@@ -152,14 +194,14 @@
           "content": {
             "application/json": {
               "schema": {
-               "example":{
-                 "userId": "111111111111111111111111",
-                 "dateTransaction": "2020-03-22T21:21:41.052+00:00",
-                 "income": false,
-                 "sum": "120",
-                 "category": "description",
-                 "description": "shirt"
-               }
+                "example": {
+                  "userId": "111111111111111111111111",
+                  "dateTransaction": "2020-03-22T21:21:41.052+00:00",
+                  "income": false,
+                  "sum": "120",
+                  "category": "description",
+                  "description": "shirt"
+                }
               }
             }
           }
@@ -172,7 +214,7 @@
                 "schema": {
                   "example": {
                     "userId": "111111111111111111111111",
-                    "_id":"22222222222222",
+                    "_id": "22222222222222",
                     "dateTransaction": "2020-03-22T21:21:41.052+00:00",
                     "income": false,
                     "sum": "120",
@@ -226,7 +268,7 @@
                 "schema": {
                   "example": {
                     "userId": "111111111111111111111111",
-                    "_id":"22222222222222",
+                    "_id": "22222222222222",
                     "dateTransaction": "2020-03-22T21:21:41.052+00:00",
                     "income": true,
                     "sum": "120",
@@ -291,7 +333,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example":{
+                "example": {
                   "year": "2023",
                   "currentMonth": "2",
                   "userId": "63f09d03f2f85fb05e29c4as"
@@ -358,7 +400,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example":[
+                  "example": [
                     {
                       "total": 2000,
                       "month": 1
@@ -513,5 +555,15 @@
         }
       }
     }
+  },
+"components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
   }
 }
+
