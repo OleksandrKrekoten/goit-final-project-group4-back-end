@@ -1,6 +1,14 @@
 const { User } = require("../schema/usersMongooseSchema");
 const createError = require("http-errors");
 
+const getUser = async (_id, token, next) => {
+  const user = await User.findOne({ _id, token });
+  if (!user) {
+    return next(createError(404, "User doesn't exist or unauthorized"));
+  }
+  return user;
+};
+
 const updateBalance = async (_id, token, balance) => {
   const user = await User.findOneAndUpdate(
     { _id, token },
@@ -21,7 +29,4 @@ const getBalance = async ({ _id, token }) => {
   return user.balance;
 };
 
-module.exports = {
-  updateBalance,
-  getBalance,
-};
+module.exports = { getUser, updateBalance, getBalance };
