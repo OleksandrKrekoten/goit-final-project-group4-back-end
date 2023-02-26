@@ -142,11 +142,11 @@
         }
       }
     },
-    "/auth/user/balance": {
+    "/auth/users/balance": {
       "patch": {
         "tags": ["Auth"],
         "security": [{ "Bearer": [] }],
-        "summary": "updating the user's balance",
+        "summary": "receiving the user's balance",
         "parameters": [],
         "requestBody": {
           "description": "Registration's object",
@@ -169,6 +169,65 @@
                 "schema": {
                   "example": {
                     "newUserBalance": "777"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      },
+      "get": {
+        "tags": ["Auth"],
+        "security": [{ "Bearer": [] }],
+        "summary": "updating the user's balance",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "balance": "777"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "security": [{ "Bearer": [] }],
+        "summary": "receiving a user",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "email": "user@gmail.com",
+                    "balance": "777"
                   }
                 }
               }
@@ -327,7 +386,7 @@
     "/transactions/incomeMonths": {
       "post": {
         "tags": ["Transactions"],
-        "summary": "User registration",
+        "summary": "receiving income for the month",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -379,7 +438,7 @@
     "/transactions/expensesMonths": {
       "post": {
         "tags": ["Transactions"],
-        "summary": "User registration",
+        "summary": "receiving expenses for the month",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -431,7 +490,7 @@
     "/transactions/fullStatistics": {
       "post": {
         "tags": ["Transactions"],
-        "summary": "User registration",
+        "summary": "receiving all statistics for the month",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
