@@ -1,6 +1,16 @@
 const { Transactions } = require("../schema/transactionsMongooseSchema");
 const createError = require("http-errors");
 
+const getAllTransactions = async (userId, page, limit) => {
+  const transactions = await Transactions.find({
+    userId,
+  })
+    .sort({ dateTransaction: -1 })
+    .skip(parseInt(page))
+    .limit(parseInt(limit));
+  return transactions;
+};
+
 const getTransactionById = async (transactionId, owner) => {
   const transaction = await Transactions.findOne({
     _id: transactionId,
@@ -34,6 +44,7 @@ const deleteTransaction = async (transactionId, owner, next) => {
 };
 
 module.exports = {
+  getAllTransactions,
   addTransaction,
   deleteTransaction,
 };

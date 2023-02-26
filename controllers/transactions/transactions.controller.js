@@ -2,7 +2,22 @@ const createError = require("http-errors");
 const {
   addTransaction,
   deleteTransaction,
+  getAllTransactions,
 } = require("../../services/transactionsService");
+
+const getAllTransactionsController = async (req, res, next) => {
+  if (!req.user) return next(createError(404, "No users found"));
+  if (!req.user.token) return next(createError(401, "Not authorized"));
+  const { _id: owner } = req.user;
+  let { page, limit } = req.query;
+
+  limit = limit > 20 ? (limit = 20) : limit;
+  page = page * limit - limit;
+
+  const userTransactions = await getAllTransactions(owner, page, limit);
+
+  return res.status(201).json(userTransactions);
+};
 
 const addTransactionController = async (req, res, next) => {
   if (!req.user) return next(createError(404, "No users found"));
@@ -45,4 +60,5 @@ const deleteTransactionController = async (req, res, next) => {
 module.exports = {
   addTransactionController,
   deleteTransactionController,
+  getAllTransactionsController,
 };

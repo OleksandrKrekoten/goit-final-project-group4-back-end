@@ -13,6 +13,10 @@ const {
 } = require("../../middlewares/authValidation");
 const ctrlWrapper = require("../../helpers/ctrlWrapper");
 const isAuth = require("../../middlewares/isAuth");
+const {
+  googleAuthController,
+  googleRedirectController,
+} = require("../../controllers/auth/googleAuthController");
 
 const authRouter = express.Router();
 
@@ -20,6 +24,17 @@ authRouter.post("/register", ctrlWrapper(authValidation), register);
 authRouter.post("/login", ctrlWrapper(authValidation), ctrlWrapper(login));
 authRouter.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
 authRouter.post("/logout", ctrlWrapper(isAuth), ctrlWrapper(logout));
+authRouter.get(
+  "/google",
+  // ctrlWrapper(isAuth),
+  ctrlWrapper(googleAuthController)
+);
+authRouter.get(
+  "/google-redirect",
+  // ctrlWrapper(isAuth),
+  ctrlWrapper(googleRedirectController)
+);
+
 authRouter.patch(
   "/user/balance",
   ctrlWrapper(isAuth),

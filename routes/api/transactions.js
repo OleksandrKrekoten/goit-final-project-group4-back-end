@@ -4,6 +4,7 @@ const isAuth = require("../../middlewares/isAuth");
 const {
   addTransactionController,
   deleteTransactionController,
+  getAllTransactionsController,
 } = require("../../controllers/transactions/transactions.controller");
 const {
   expensesMonths,
@@ -19,6 +20,7 @@ const {
 
 router.use(ctrlWrapper(isAuth));
 
+router.get("/", ctrlWrapper(getAllTransactionsController));
 router.post(
   "/expenses",
   addTransactionValitation,
@@ -35,11 +37,7 @@ router.delete(
   ctrlWrapper(deleteTransactionController)
 );
 
-router.post(
-  "/incomeMonths",
-  mothsResultsValidation,
-  ctrlWrapper(incomeMonths)
-);
+router.post("/incomeMonths", mothsResultsValidation, ctrlWrapper(incomeMonths));
 
 router.post(
   "/expensesMonths",
