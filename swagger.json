@@ -11,7 +11,10 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3030/api" },{"url":"https://kapusta-dvde.onrender.com/api"}],
+  "servers": [
+    { "url": "http://localhost:3030/api" },
+    { "url": "https://kapusta-dvde.onrender.com/api" }
+  ],
   "tags": [
     {
       "name": "Auth",
@@ -182,7 +185,7 @@
         }
       }
     },
-    "/transaction/expenses": {
+    "/transactions/expenses": {
       "post": {
         "tags": ["Transactions"],
         "summary": "Add expenses transaction",
@@ -236,7 +239,7 @@
         }
       }
     },
-    "/transaction/income": {
+    "/transactions/income": {
       "post": {
         "tags": ["Transactions"],
         "summary": "Add income transaction",
@@ -290,7 +293,7 @@
         }
       }
     },
-    "/transaction/:transactionId": {
+    "/transactions/:transactionId": {
       "delete": {
         "tags": ["Transactions"],
         "summary": "delete transaction",
@@ -321,7 +324,7 @@
         }
       }
     },
-    "/transaction/incomeMonths": {
+    "/transactions/incomeMonths": {
       "post": {
         "tags": ["Transactions"],
         "summary": "User registration",
@@ -373,7 +376,7 @@
         }
       }
     },
-    "/transaction/expensesMonths": {
+    "/transactions/expensesMonths": {
       "post": {
         "tags": ["Transactions"],
         "summary": "User registration",
@@ -425,7 +428,7 @@
         }
       }
     },
-    "/transaction/fullStatistics": {
+    "/transactions/fullStatistics": {
       "post": {
         "tags": ["Transactions"],
         "summary": "User registration",
@@ -556,7 +559,7 @@
       }
     }
   },
-"components": {
+  "components": {
     "securitySchemes": {
       "Bearer": {
         "type": "http",
@@ -566,4 +569,3 @@
     }
   }
 }
-
