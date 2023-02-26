@@ -5,6 +5,7 @@ const register = require("../../controllers/auth/register.controller");
 const {
   updateUserBalance,
   getUserBalance,
+  getCurrentUser,
 } = require("../../controllers/auth/user.controller");
 const verifyEmail = require("../../controllers/auth/verifyEmail");
 const {
@@ -36,15 +37,20 @@ authRouter.get(
 );
 
 authRouter.patch(
-  "/user/balance",
+  "/users/balance",
   ctrlWrapper(isAuth),
   ctrlWrapper(userBalanceValidation),
   ctrlWrapper(updateUserBalance)
 );
 authRouter.get(
-  "/user/balance",
+  "/users/balance",
   ctrlWrapper(isAuth),
   ctrlWrapper(getUserBalance)
+);
+authRouter.get(
+  "/users/current",
+  ctrlWrapper(isAuth),
+  ctrlWrapper(getCurrentUser)
 );
 
 module.exports = authRouter;
