@@ -54,6 +54,7 @@ const deleteTransactionController = async (req, res, next) => {
   if (!isTransactionDeleted) return;
   res.status(200).json({
     message: "The transaction is successfully deleted!",
+    userId: owner,
   });
 };
 
