@@ -25,16 +25,8 @@ authRouter.post("/register", ctrlWrapper(authValidation), register);
 authRouter.post("/login", ctrlWrapper(authValidation), ctrlWrapper(login));
 authRouter.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
 authRouter.post("/logout", ctrlWrapper(isAuth), ctrlWrapper(logout));
-authRouter.get(
-  "/google",
-  // ctrlWrapper(isAuth),
-  ctrlWrapper(googleAuthController)
-);
-authRouter.get(
-  "/google-redirect",
-  // ctrlWrapper(isAuth),
-  ctrlWrapper(googleRedirectController)
-);
+authRouter.get("/google", ctrlWrapper(googleAuthController));
+authRouter.get("/google-redirect", ctrlWrapper(googleRedirectController));
 
 authRouter.patch(
   "/users/balance",
