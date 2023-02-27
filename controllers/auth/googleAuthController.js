@@ -1,14 +1,14 @@
 const queryString = require("query-string");
 const axios = require("axios");
 const createError = require("http-errors");
-// const URL = require("url");
+const { googleUserLogin } = require("../../services/googleAuth");
 
 const { PORT, FRONT_URL } = process.env;
 
 const googleAuthController = async (req, res, next) => {
   const stringifiedParams = queryString.stringify({
     client_id: process.env.GOOGLE_CLIENT_ID,
-    redirect_uri: `$http://localhost:${PORT}/auth/google-redirect`,
+    redirect_uri: `http://localhost:${PORT}/api/auth/google-redirect`,
     scope: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",
@@ -36,7 +36,7 @@ const googleRedirectController = async (req, res, next) => {
     data: {
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `$http://localhost:${PORT}/auth/google-redirect`,
+      redirect_uri: `http://localhost:${PORT}/api/auth/google-redirect`,
       grant_type: "authorization_code",
       code,
     },
@@ -48,12 +48,12 @@ const googleRedirectController = async (req, res, next) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
-  console.log(userData);
-  // userData.data.email
-  // ...
-  // ...
-  // ...
-  return res.redirect(`${FRONT_URL}?email=${userData.data.email}`);
+
+  const { email, balance, token } = await googleUserLogin(userData.data.email);
+
+  return res.redirect(
+    `${FRONT_URL}?email=${email}&token=${token}&balance=${balance}`
+  );
 };
 
 module.exports = { googleAuthController, googleRedirectController };

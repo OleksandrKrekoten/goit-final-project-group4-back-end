@@ -20,7 +20,7 @@ const schema = mongoose.Schema(
     },
     balance: {
       type: String,
-      default: "0",
+      default: null,
       //   required: [true, "Balance is required"],
     },
     verify: {
