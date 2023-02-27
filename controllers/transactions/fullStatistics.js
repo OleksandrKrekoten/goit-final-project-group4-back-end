@@ -72,6 +72,7 @@ const fullStatistics = async (req, res, next) => {
       },
     },
   ]);
+  console.log("startedRes",startedRes)
   if (startedRes.length === 0) {
     // return res
     //   .status(400)
@@ -134,7 +135,11 @@ const fullStatistics = async (req, res, next) => {
   }
   //
   if (definer === "both" || definer === "expenses") {
-    const expenses = startedRes[0];
+    let expenses = startedRes[1];
+    if(definer === "expenses")
+    {
+      expenses=startedRes[0]
+    }
     const expensesTransactions = expenses.transactions;
 
     const arr2 = [];
