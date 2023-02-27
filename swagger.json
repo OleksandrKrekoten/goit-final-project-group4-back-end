@@ -112,6 +112,35 @@
         }
       }
     },
+    "/auth/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Google authorization",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
     "/auth/logout": {
       "post": {
         "tags": ["Auth"],
