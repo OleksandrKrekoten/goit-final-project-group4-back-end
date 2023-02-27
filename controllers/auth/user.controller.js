@@ -9,7 +9,7 @@ const getCurrentUser = async (req, res, next) => {
   if (!req.user) return next(createError(404, "No users found"));
   if (!req.user.token) return next(createError(401, "Not authorized"));
   const { email, balance, token } = await getUser(req.user);
-  return res.status(201).json({ email, balance, token });
+  return res.status(200).json({ email, balance, token });
 };
 
 const updateUserBalance = async (req, res, next) => {
