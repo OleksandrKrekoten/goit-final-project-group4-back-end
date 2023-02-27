@@ -24,7 +24,55 @@ const fullStatistics = async (req, res, next) => {
   const dataEnds = new Date(
     `Thu, 31  ${getMonthName(currentMonth)} ${year} 00:00:00 GMT`
   );
-
+// const startedRes= await Transactions.aggregate([
+//   {
+//     '$match': {
+//       'userId': '63fb3af07e6529797d144ae8', 
+//       'dateTransaction': {
+//         '$gte': new Date('Sun, 01 Jan 2023 00:00:00 GMT'), 
+//         '$lte': new Date('Sun, 31 Dec 2023 00:00:00 GMT')
+//       }, 
+//       'dateTransaction': {
+//         '$gte': new Date('Wed, 01 Feb 2023 00:00:00 GMT'), 
+//         '$lte': new Date('Fri, 03 Mar 2023 00:00:00 GMT')
+//       }
+//     }
+//   }, {
+//     '$group': {
+//       '_id': '$income', 
+//       'transactions': {
+//         '$push': {
+//           'sum': '$sum', 
+//           'desc': '$desc', 
+//           'category': '$category'
+//         }
+//       }, 
+//       'totalSum': {
+//         '$sum': '$sum'
+//       }
+//     }
+//   }, {
+//     '$addFields': {
+//       'type': {
+//         '$cond': {
+//           'if': {
+//             '$eq': [
+//               '$_id', true
+//             ]
+//           }, 
+//           'then': 'income', 
+//           'else': 'expenses'
+//         }
+//       }
+//     }
+//   }, {
+//     '$unset': '_id'
+//   }, {
+//     '$sort': {
+//       'type': -1
+//     }
+//   }
+// ])
   const startedRes = await Transactions.aggregate([
     {
       $match: {
@@ -72,6 +120,7 @@ const fullStatistics = async (req, res, next) => {
       },
     },
   ]);
+  console.log("startedRes",startedRes)
   if (startedRes.length === 0) {
     // return res
     //   .status(400)
@@ -134,7 +183,11 @@ const fullStatistics = async (req, res, next) => {
   }
   //
   if (definer === "both" || definer === "expenses") {
-    const expenses = startedRes[0];
+    let expenses = startedRes[1];
+    if(definer === "expenses")
+    {
+      expenses=startedRes[0]
+    }
     const expensesTransactions = expenses.transactions;
 
     const arr2 = [];
