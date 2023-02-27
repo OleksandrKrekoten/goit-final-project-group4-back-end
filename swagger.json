@@ -59,12 +59,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -95,6 +93,8 @@
               "application/json": {
                 "schema": {
                   "example": {
+                    "email": "user@gmail.com",
+                    "balance": "123",
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM"
                   }
                 }
@@ -102,12 +102,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -132,12 +130,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -175,12 +171,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       },
@@ -203,12 +197,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -220,26 +212,89 @@
         "summary": "receiving a user",
         "parameters": [],
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
                   "example": {
                     "email": "user@gmail.com",
-                    "balance": "777"
+                    "balance": "777",
+                    "token": "123exampleToken"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User login by google",
+        "responses": {
+          "200": {
+            "description": "URl string with query params",
+            "content": {
+              "url": {
+                "example": "http://example.com/api?email=email&token=token&balance=balance"
+              }
+            }
+          },
+          "401": {
+            "description": "google authorization error"
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all user transactions",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "userId": "111111111111111111111111",
+                      "_id": "22222222222222",
+                      "dateTransaction": "2020-03-22T21:21:41.052+00:00",
+                      "income": false,
+                      "sum": "120",
+                      "category": "description",
+                      "description": "shirt"
+                    },
+                    {
+                      "userId": "111111111111111111111111",
+                      "_id": "22222222222222",
+                      "dateTransaction": "2020-03-22T21:21:41.052+00:00",
+                      "income": false,
+                      "sum": "120",
+                      "category": "description",
+                      "description": "shirt"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "No users found"
           }
         }
       }
@@ -257,7 +312,6 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "userId": "111111111111111111111111",
                   "dateTransaction": "2020-03-22T21:21:41.052+00:00",
                   "income": false,
                   "sum": "120",
@@ -288,12 +342,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -311,7 +363,6 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "userId": "111111111111111111111111",
                   "dateTransaction": "2020-03-22T21:21:41.052+00:00",
                   "income": true,
                   "sum": "120",
@@ -342,12 +393,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -367,18 +416,19 @@
                 "schema": {
                   "type": "string",
                   "description": "message",
-                  "example": "The transaction is successfully deleted!"
+                  "example": {
+                    "message": "The transaction is successfully deleted!",
+                    "userId": "111111111111111111111111"
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -425,12 +475,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -477,12 +525,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
@@ -607,12 +653,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }

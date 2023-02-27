@@ -16,7 +16,7 @@ const getAllTransactionsController = async (req, res, next) => {
 
   const userTransactions = await getAllTransactions(owner, page, limit);
 
-  return res.status(201).json(userTransactions);
+  return res.status(200).json(userTransactions);
 };
 
 const addTransactionController = async (req, res, next) => {
