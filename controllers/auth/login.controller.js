@@ -21,10 +21,16 @@ const login = async (req, res, next) => {
   const token = jwt.sign({ id: storedUser._id }, process.env.JWT_SECRET, {
     expiresIn: "10h",
   });
-  await User.findByIdAndUpdate(storedUser._id, { token });
+  const user = await User.findByIdAndUpdate(
+    storedUser._id,
+    { token },
+    { new: true }
+  );
 
   return res.status(201).json({
-    token,
+    email: user.email,
+    balance: user.balance,
+    token: user.token,
   });
 };
 
