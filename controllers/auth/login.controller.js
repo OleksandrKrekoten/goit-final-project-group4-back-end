@@ -27,7 +27,7 @@ const login = async (req, res, next) => {
     { new: true }
   );
 
-  return res.status(201).json({
+  return res.status(200).json({
     email: user.email,
     balance: user.balance,
     token: user.token,

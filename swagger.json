@@ -10,7 +10,7 @@
     }
   },
   "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "produces": ["application/json", "url"],
   "servers": [
     { "url": "http://localhost:3030/api" },
     { "url": "https://kapusta-dvde.onrender.com/api" }
@@ -37,10 +37,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "email": "user@gmail.com",
-                  "password": "12345678"
-                }
+                "$ref": "#/components/schemas/RegistrationRequest"
               }
             }
           }
@@ -51,9 +48,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "email": "user@gmail.com"
-                  }
+                  "$ref": "#/components/schemas/RegistrationResponse"
                 }
               }
             }
@@ -78,34 +73,24 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "email": "user@gmail.com",
-                  "password": "12345678"
-                }
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "email": "user@gmail.com",
-                    "balance": "123",
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM"
-                  }
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "email or password is not valid"
           }
         }
       }
@@ -122,9 +107,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "description": "message",
-                  "example": "No content"
+                  "$ref": "#/components/schemas/LogoutResponse"
                 }
               }
             }
@@ -142,7 +125,7 @@
       "patch": {
         "tags": ["Auth"],
         "security": [{ "Bearer": [] }],
-        "summary": "receiving the user's balance",
+        "summary": "updating the user's balance",
         "parameters": [],
         "requestBody": {
           "description": "Registration's object",
@@ -150,9 +133,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "balance": "777"
-                }
+                "$ref": "#/components/schemas/UpdateBalanceRequest"
               }
             }
           }
@@ -163,35 +144,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "newUserBalance": "777"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "409": {
-            "description": "Provided email already exists"
-          }
-        }
-      },
-      "get": {
-        "tags": ["Auth"],
-        "security": [{ "Bearer": [] }],
-        "summary": "updating the user's balance",
-        "parameters": [],
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "example": {
-                    "balance": "777"
-                  }
+                  "$ref": "#/components/schemas/UpdateBalanceResponse"
                 }
               }
             }
@@ -217,20 +170,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "email": "user@gmail.com",
-                    "balance": "777",
-                    "token": "123exampleToken"
-                  }
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)"
+          "404": {
+            "description": "No users found"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       }
@@ -241,10 +190,12 @@
         "summary": "User login by google",
         "responses": {
           "200": {
-            "description": "URl string with query params",
+            "description": "URl string with query params consisted of user's email, tokken, balance",
             "content": {
               "url": {
-                "example": "http://example.com/api?email=email&token=token&balance=balance"
+                "schema": {
+                  "$ref": "#/components/schemas/GoogleAuthorization"
+                }
               }
             }
           },
@@ -266,26 +217,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": [
-                    {
-                      "userId": "111111111111111111111111",
-                      "_id": "22222222222222",
-                      "dateTransaction": "2020-03-22T21:21:41.052+00:00",
-                      "income": false,
-                      "sum": "120",
-                      "category": "description",
-                      "description": "shirt"
-                    },
-                    {
-                      "userId": "111111111111111111111111",
-                      "_id": "22222222222222",
-                      "dateTransaction": "2020-03-22T21:21:41.052+00:00",
-                      "income": false,
-                      "sum": "120",
-                      "category": "description",
-                      "description": "shirt"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/AllTransactionsResponse"
                 }
               }
             }
@@ -311,13 +243,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "dateTransaction": "2020-03-22T21:21:41.052+00:00",
-                  "income": false,
-                  "sum": "120",
-                  "category": "description",
-                  "description": "shirt"
-                }
+                "$ref": "#/components/schemas/ExpensesRequest"
               }
             }
           }
@@ -328,24 +254,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "userId": "111111111111111111111111",
-                    "_id": "22222222222222",
-                    "dateTransaction": "2020-03-22T21:21:41.052+00:00",
-                    "income": false,
-                    "sum": "120",
-                    "category": "description",
-                    "description": "shirt"
-                  }
+                  "$ref": "#/components/schemas/ExpensesResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)"
+          "401": {
+            "description": "token type is not valid"
           },
           "409": {
-            "description": "Provided email already exists"
+            "description": "user not authorized"
           }
         }
       }
@@ -362,13 +280,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "dateTransaction": "2020-03-22T21:21:41.052+00:00",
-                  "income": true,
-                  "sum": "120",
-                  "category": "description",
-                  "description": "shirt"
-                }
+                "$ref": "#/components/schemas/IncomeRequest"
               }
             }
           }
@@ -379,15 +291,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "userId": "111111111111111111111111",
-                    "_id": "22222222222222",
-                    "dateTransaction": "2020-03-22T21:21:41.052+00:00",
-                    "income": true,
-                    "sum": "120",
-                    "category": "description",
-                    "description": "shirt"
-                  }
+                  "$ref": "#/components/schemas/IncomeRequest"
                 }
               }
             }
@@ -407,28 +311,22 @@
         "summary": "delete transaction",
         "parameters": [{ "in": "path", "name": "transactionId" }],
         "security": [{ "Bearer": [] }],
-
         "responses": {
           "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "description": "message",
-                  "example": {
-                    "message": "The transaction is successfully deleted!",
-                    "userId": "111111111111111111111111"
-                  }
+                  "$ref": "#/components/schemas/TransactionDeleteResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)"
+          "401": {
+            "description": "no token provided"
           },
           "409": {
-            "description": "Provided email already exists"
+            "description": "user not authorized"
           }
         }
       }
@@ -445,11 +343,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "year": "2023",
-                  "currentMonth": "2",
-                  "userId": "63f09d03f2f85fb05e29c4as"
-                }
+                "$ref": "#/components/schemas/IncomeMonthsRequest"
               }
             }
           }
@@ -460,16 +354,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": [
-                    {
-                      "total": 2000,
-                      "month": 1
-                    },
-                    {
-                      "total": 10000,
-                      "month": 2
-                    }
-                  ]
+                  "$ref": "#/components/schemas/IncomeMonthsResponse"
                 }
               }
             }
@@ -495,11 +380,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "year": "2023",
-                  "currentMonth": "2",
-                  "userId": "63f09d03f2f85fb05e29c4as"
-                }
+                "$ref": "#/components/schemas/ExpensesMonthsRequest"
               }
             }
           }
@@ -510,16 +391,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": [
-                    {
-                      "total": 2000,
-                      "month": 1
-                    },
-                    {
-                      "total": 10000,
-                      "month": 2
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ExpensesMonthsResponse"
                 }
               }
             }
@@ -545,10 +417,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "example": {
-                  "year": "2023",
-                  "currentMonth": "10"
-                }
+                "$ref": "#/components/schemas/FullStatisticsRequest"
               }
             }
           }
@@ -560,94 +429,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "icome": {
-                      "totalSum": 1800,
-                      "categories": [
-                        {
-                          "category": "Clothes",
-                          "sum": 1300,
-                          "descriptions": [
-                            {
-                              "description": "bed",
-                              "sum": 500
-                            },
-                            {
-                              "description": "bed2",
-                              "sum": 500
-                            },
-                            {
-                              "description": "shirt",
-                              "sum": 300
-                            }
-                          ]
-                        },
-                        {
-                          "category": "Food",
-                          "sum": 500,
-                          "descriptions": [
-                            {
-                              "description": "jjhhhgg",
-                              "sum": 500
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    "expenses": {
-                      "totalSum": 4500,
-                      "categories": [
-                        {
-                          "category": "HomeSpace",
-                          "sum": 800,
-                          "descriptions": [
-                            {
-                              "description": "jjhhhgg",
-                              "sum": 800
-                            }
-                          ]
-                        },
-                        {
-                          "category": "Furniture",
-                          "sum": 300,
-                          "descriptions": [
-                            {
-                              "description": "sofa",
-                              "sum": 300
-                            }
-                          ]
-                        },
-                        {
-                          "category": "Home",
-                          "sum": 1800,
-                          "descriptions": [
-                            {
-                              "description": "new",
-                              "sum": 500
-                            },
-                            {
-                              "description": "tyre",
-                              "sum": 1300
-                            }
-                          ]
-                        },
-                        {
-                          "category": "Clothes",
-                          "sum": 1600,
-                          "descriptions": [
-                            {
-                              "description": "Homdh",
-                              "sum": 650
-                            },
-                            {
-                              "description": "wow",
-                              "sum": 950
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
+                  "$ref": "#/components/schemas/FullStatisticsResponse"
                 }
               }
             }
@@ -663,6 +445,466 @@
     }
   },
   "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "balance": {
+            "type": "string",
+            "description": "User's balance",
+            "example": "qwerty123"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's tokken",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM"
+          }
+        }
+      },
+      "LogoutResponse": {
+        "type": "string",
+        "description": "message",
+        "example": "No content"
+      },
+      "UpdateBalanceRequest": {
+        "type": "object",
+        "required": ["balance"],
+        "properties": {
+          "balance": {
+            "type": "integer",
+            "description": "User's balance",
+            "example": "1234"
+          }
+        }
+      },
+      "UpdateBalanceResponse": {
+        "type": "object",
+        "properties": {
+          "newUserBalance": {
+            "type": "string",
+            "description": "User's balance",
+            "example": "1234"
+          }
+        }
+      },
+      "GoogleAuthorization": {
+        "type": "url",
+        "example": "http://example.com/api?email=user@gmail.com&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM&balance=1234"
+      },
+      "AllTransactionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User's id",
+              "example": "11111111111111111111"
+            },
+            "_id": {
+              "type": "string",
+              "description": "Transaction's id",
+              "example": "22222222222222222222"
+            },
+            "dateTransaction": {
+              "type": "date",
+              "description": "Transaction's date",
+              "example": "2020-03-22T21:21:41.052+00:00"
+            },
+            "income": {
+              "type": "boolean",
+              "description": "Transaction's type",
+              "example": "true"
+            },
+            "sum": {
+              "type": "integer",
+              "description": "Transaction's sum",
+              "example": "120"
+            },
+            "category": {
+              "type": "string",
+              "description": "Transaction's category",
+              "example": "products"
+            },
+            "description": {
+              "type": "string",
+              "description": "Transaction's description",
+              "example": "apple"
+            }
+          }
+        }
+      },
+      "ExpensesRequest": {
+        "type": "object",
+        "properties": {
+          "dateTransaction": {
+            "type": "date",
+            "description": "Transaction's date",
+            "example": "2020-03-22T21:21:41.052+00:00"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "Transaction's type",
+            "example": "false"
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Transaction's sum",
+            "example": "120"
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction's category",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction's description",
+            "example": "apple"
+          }
+        }
+      },
+      "ExpensesResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "User's id",
+            "example": "111111111111111111111111"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Transaction's id",
+            "example": "222222222222222222222222"
+          },
+          "dateTransaction": {
+            "type": "date",
+            "description": "Transaction's date",
+            "example": "2020-03-22T21:21:41.052+00:00"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "Transaction's type",
+            "example": "false"
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Transaction's sum",
+            "example": "120"
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction's category",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction's description",
+            "example": "apple"
+          }
+        }
+      },
+      "IncomeRequest": {
+        "type": "object",
+        "properties": {
+          "dateTransaction": {
+            "type": "date",
+            "description": "Transaction's date",
+            "example": "2020-03-22T21:21:41.052+00:00"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "Transaction's type",
+            "example": "true"
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Transaction's sum",
+            "example": "120"
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction's category",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction's description",
+            "example": "apple"
+          }
+        }
+      },
+      "IncomeResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "User's id",
+            "example": "111111111111111111111111"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Transaction's id",
+            "example": "222222222222222222222222"
+          },
+          "dateTransaction": {
+            "type": "date",
+            "description": "Transaction's date",
+            "example": "2020-03-22T21:21:41.052+00:00"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "Transaction's type",
+            "example": "true"
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Transaction's sum",
+            "example": "120"
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction's category",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction's description",
+            "example": "apple"
+          }
+        }
+      },
+      "TransactionDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "The transaction is successfully deleted!"
+          },
+          "userId": {
+            "type": "string",
+            "example": "111111111111111111111111"
+          }
+        }
+      },
+      "IncomeMonthsRequest": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "string",
+            "example": "2023"
+          },
+          "currentMonth": {
+            "type": "string",
+            "example": "2"
+          },
+          "userId": {
+            "type": "string",
+            "example": "111111111111111111111111"
+          }
+        }
+      },
+      "IncomeMonthsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer",
+              "description": "total income transactions per month",
+              "example": "2000"
+            },
+            "month": {
+              "type": "integer",
+              "description": "month",
+              "example": "1"
+            }
+          }
+        }
+      },
+      "ExpensesMonthsRequest": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "string",
+            "example": "2023"
+          },
+          "currentMonth": {
+            "type": "string",
+            "example": "2"
+          },
+          "userId": {
+            "type": "string",
+            "example": "111111111111111111111111"
+          }
+        }
+      },
+      "ExpensesMonthsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer",
+              "description": "total income transactions per month",
+              "example": "2000"
+            },
+            "month": {
+              "type": "integer",
+              "description": "month",
+              "example": "1"
+            }
+          }
+        }
+      },
+      "FullStatisticsRequest": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "string",
+            "example": "2023"
+          },
+          "currentMonth": {
+            "type": "string",
+            "example": "2"
+          }
+        }
+      },
+      "FullStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "icome": {
+            "type": "object",
+            "properties": {
+              "totalSum": {
+                "type": "integer",
+                "example": 1800
+              },
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "example": "Clothes"
+                    },
+                    "sum": {
+                      "type": "integer",
+                      "example": "1300"
+                    },
+                    "descriptions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "example": "bed"
+                          },
+                          "sum": {
+                            "type": "integer",
+                            "example": "500"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "expenses": {
+            "type": "object",
+            "properties": {
+              "totalSum": {
+                "type": "integer",
+                "example": 4500
+              },
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "example": "HomeSpace"
+                    },
+                    "sum": {
+                      "type": "integer",
+                      "example": "300"
+                    },
+                    "descriptions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "example": "sofa"
+                          },
+                          "sum": {
+                            "type": "integer",
+                            "example": "300"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "securitySchemes": {
       "Bearer": {
         "type": "http",
