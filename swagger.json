@@ -10,7 +10,7 @@
     }
   },
   "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "produces": ["application/json", "url"],
   "servers": [
     { "url": "http://localhost:3030/api" },
     { "url": "https://kapusta-dvde.onrender.com/api" }
@@ -170,7 +170,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CurrentUserResponse"
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
@@ -531,26 +531,6 @@
             "type": "string",
             "description": "User's balance",
             "example": "1234"
-          }
-        }
-      },
-      "CurrentUserResponse": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "example": "user@gmail.com"
-          },
-          "balance": {
-            "type": "string",
-            "description": "User's balance",
-            "example": "1234"
-          },
-          "token": {
-            "type": "string",
-            "description": "User's tokken",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjY3Zjk1ZmJhNjRiNGRkZGVmOTNjZSIsImlhdCI6MTY3NzEzNzY0MSwiZXhwIjoxNjc3MTczNjQxfQ.Oz4jji9rKghQqZMDEEw97eiYqAvjSBoT09Gn7-REZsM"
           }
         }
       },
