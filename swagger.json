@@ -291,7 +291,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IncomeRequest"
+                  "$ref": "#/components/schemas/IncomeResponse"
                 }
               }
             }
@@ -343,7 +343,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IncomeMonthsRequest"
+                "$ref": "#/components/schemas/ExpensesMonthsRequest"
               }
             }
           }
@@ -354,7 +354,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IncomeMonthsResponse"
+                  "$ref": "#/components/schemas/ExpensesMonthsResponse"
                 }
               }
             }
@@ -731,41 +731,6 @@
           "userId": {
             "type": "string",
             "example": "111111111111111111111111"
-          }
-        }
-      },
-      "IncomeMonthsRequest": {
-        "type": "object",
-        "properties": {
-          "year": {
-            "type": "string",
-            "example": "2023"
-          },
-          "currentMonth": {
-            "type": "string",
-            "example": "2"
-          },
-          "userId": {
-            "type": "string",
-            "example": "111111111111111111111111"
-          }
-        }
-      },
-      "IncomeMonthsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "total": {
-              "type": "integer",
-              "description": "total income transactions per month",
-              "example": "2000"
-            },
-            "month": {
-              "type": "integer",
-              "description": "month",
-              "example": "1"
-            }
           }
         }
       },
