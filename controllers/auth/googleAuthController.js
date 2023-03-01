@@ -3,12 +3,13 @@ const axios = require("axios");
 const createError = require("http-errors");
 const { googleUserLogin } = require("../../services/googleAuth");
 
-const { FRONT_URL } = process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BACK_URL, FRONT_URL } =
+  process.env;
 
 const googleAuthController = async (req, res, next) => {
   const stringifiedParams = queryString.stringify({
-    client_id: process.env.GOOGLE_CLIENT_ID,
-    redirect_uri: `https://kapusta-dvde.onrender.com/api/auth/google-redirect`,
+    client_id: GOOGLE_CLIENT_ID,
+    redirect_uri: `${BACK_URL}/api/auth/google-redirect`,
     scope: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",
@@ -34,9 +35,9 @@ const googleRedirectController = async (req, res, next) => {
     url: `https://oauth2.googleapis.com/token`,
     method: "post",
     data: {
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `https://kapusta-dvde.onrender.com/api/auth/google-redirect`,
+      client_id: GOOGLE_CLIENT_ID,
+      client_secret: GOOGLE_CLIENT_SECRET,
+      redirect_uri: `${BACK_URL}/api/auth/google-redirect`,
       grant_type: "authorization_code",
       code,
     },
