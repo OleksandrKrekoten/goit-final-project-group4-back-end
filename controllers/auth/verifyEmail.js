@@ -11,13 +11,15 @@ const verifyEmail = async (req, res, next) => {
       throw BadRequest("Verify token is not valid");
     }
 
-    await User.findByIdAndUpdate(user._id, {
-      verify: true,
-      verificationToken: null,
-    });
-    return res.json({
-      message: "Success",
-    });
+    const { verify } = await User.findByIdAndUpdate(
+      user._id,
+      {
+        verify: true,
+        verificationToken: null,
+      },
+      { new: true }
+    );
+    return res.redirect(`${process.env.FRONT_URL}?verify=${verify}`);
   } catch (error) {
     next(error);
   }
