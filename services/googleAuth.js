@@ -25,4 +25,4 @@ const googleUserLogin = async (email) => {
   return googleAuthorizedUser;
 };
 
-module.exports = { googleUserLogin }
+module.exports = { googleUserLogin };
