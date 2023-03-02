@@ -231,17 +231,11 @@
         }
       }
     },
-    "/transactions/:transactionType": {
+    "/transactions/expenses": {
       "post": {
         "tags": ["Transactions"],
-        "summary": "Add expenses or income transaction",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "transactionType",
-            "example": "expenses/income"
-          }
-        ],
+        "summary": "Add expenses transaction",
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Request object",
@@ -249,7 +243,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddTransactionRequest"
+                "$ref": "#/components/schemas/ExpensesRequest"
               }
             }
           }
@@ -260,16 +254,53 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddTransactionResponse"
+                  "$ref": "#/components/schemas/ExpensesResponse"
                 }
               }
             }
           },
           "401": {
-            "description": "no token provided"
+            "description": "token type is not valid"
           },
           "409": {
             "description": "user not authorized"
+          }
+        }
+      }
+    },
+    "/transactions/income": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Add income transaction",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Request object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncomeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncomeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
+          },
+          "409": {
+            "description": "Provided email already exists"
           }
         }
       }
@@ -550,7 +581,7 @@
           }
         }
       },
-      "AddTransactionRequest": {
+      "ExpensesRequest": {
         "type": "object",
         "properties": {
           "dateTransaction": {
@@ -580,7 +611,7 @@
           }
         }
       },
-      "AddTransactionResponse": {
+      "ExpensesResponse": {
         "type": "object",
         "properties": {
           "userId": {
@@ -602,6 +633,76 @@
             "type": "boolean",
             "description": "Transaction's type",
             "example": "false"
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Transaction's sum",
+            "example": "120"
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction's category",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction's description",
+            "example": "apple"
+          }
+        }
+      },
+      "IncomeRequest": {
+        "type": "object",
+        "properties": {
+          "dateTransaction": {
+            "type": "date",
+            "description": "Transaction's date",
+            "example": "2020-03-22T21:21:41.052+00:00"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "Transaction's type",
+            "example": "true"
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Transaction's sum",
+            "example": "120"
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction's category",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction's description",
+            "example": "apple"
+          }
+        }
+      },
+      "IncomeResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "User's id",
+            "example": "111111111111111111111111"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Transaction's id",
+            "example": "222222222222222222222222"
+          },
+          "dateTransaction": {
+            "type": "date",
+            "description": "Transaction's date",
+            "example": "2020-03-22T21:21:41.052+00:00"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "Transaction's type",
+            "example": "true"
           },
           "sum": {
             "type": "integer",
