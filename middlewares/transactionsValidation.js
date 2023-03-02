@@ -1,11 +1,13 @@
 const Joi = require("joi");
 
 const addTransactionValitation = (req, res, next) => {
+  const { transactionType } = req.params;
   const schema = Joi.object({
     dateTransaction: Joi.date().required(),
-    income: req.originalUrl.includes("income")
-      ? Joi.boolean().valid(true).required()
-      : Joi.boolean().valid(false).required(),
+    income:
+      transactionType === "income"
+        ? Joi.boolean().valid(true).required()
+        : Joi.boolean().valid(false).required(),
     sum: Joi.number().required(),
     category: Joi.string().required(),
     description: Joi.string().required(),
