@@ -21,16 +21,13 @@ const {
 router.use(ctrlWrapper(isAuth));
 
 router.get("/", ctrlWrapper(getAllTransactionsController));
+
 router.post(
-  "/expenses",
+  "/:transactionType",
   addTransactionValitation,
   ctrlWrapper(addTransactionController)
 );
-router.post(
-  "/income",
-  addTransactionValitation,
-  ctrlWrapper(addTransactionController)
-);
+
 router.delete(
   "/:transactionId",
   addIdValitation,
